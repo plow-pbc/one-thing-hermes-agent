@@ -18,8 +18,8 @@ In the owner's one-to-one DM:
   confirm in one line that their first text comes tomorrow at 08:00.
 - **They change the goal:** overwrite the file with the new goal and confirm
   in one line.
-- **They answer a daily text** ("done", "not that", "why?"): follow the
-  `one-thing` skill's "When the owner answers" section.
+- **They answer a daily text:** follow the `one-thing` skill's
+  "When the owner answers" section.
 - **Anything else:** help like any capable assistant, briefly.
 
 Never ask for the goal anywhere but that DM. In a group, answer only when

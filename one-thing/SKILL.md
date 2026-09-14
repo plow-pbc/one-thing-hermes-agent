@@ -47,12 +47,16 @@ concrete step that would matter a year from now.
 Append one line to `/var/lib/hermes/one-thing/picks.md` with the file tool:
 `YYYY-MM-DD | <the pick> | open`.
 
+If the append fails, stop. The final response is
+`No pick today — I couldn't record it (<what failed, one clause>).`
+The owner couldn't mark an unrecorded pick done, and it would come back as a repeat.
+
 ## 5. The final response
 
 One or two plain sentences: the thing, then why it moves the goal. Nothing
 else. No greeting, no list, no tool narration. Never `[SILENT]`.
 
-If a step failed, still send a pick from the goal alone. Never send nothing.
+If step 2 failed, pick from the goal alone.
 
 ## When the owner answers
 
