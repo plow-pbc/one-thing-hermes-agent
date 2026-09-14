@@ -40,7 +40,7 @@ every 5 minutes, through the pinned client in `vendor/client.pin`. With
 | --- | --- |
 | `runtime/persona.md` | who the agent is |
 | `one-thing/SKILL.md` | the daily pick, and how it handles your replies |
-| `one-thing/scripts/register_cron.py` | registers the 08:00 cron once, at boot |
+| `one-thing/scripts/register_cron.py` | at boot, makes sure the 08:00 cron exists and delivers to your current chat |
 | `image/s6-overlay/s6-rc.d/one-thing-cron/` | runs that script from the root-owned copy |
 | `image/s6-overlay/s6-rc.d/agent-index/` | the usage reporter from life-assistant, but it registers as root so the agent never sees the Plow token |
 

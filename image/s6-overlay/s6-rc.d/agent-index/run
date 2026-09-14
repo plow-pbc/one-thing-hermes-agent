@@ -66,15 +66,26 @@ while :; do
       # As root, not hermes: this is the only step that holds the broad Plow
       # token, and a same-uid agent process could read it from the child's
       # /proc/<pid>/environ. The agent gets only what registering produced: the
-      # scoped index key in the client's state file, handed over below.
-      env HOME="$HERMES_HOME" HERMES_HOME="$HERMES_HOME" AGENT_ID="$AGENT_ID" PLOW_AGENT_TOKEN="$PLOW_AGENT_TOKEN" \
-        /opt/hermes/.venv/bin/python3 /opt/plow/agent-index-client.py \
-        --register --agent "$AGENT_ID" >/dev/null \
-      && chown hermes:hermes "$HERMES_HOME/.agent-index.json" || {
+      # scoped index key in the client's state file.
+      #
+      # Root never writes or chowns by path in the agent's home, where the agent
+      # could plant a symlink. The client writes into a fresh 0700 root directory
+      # (the home is sticky, so the agent can neither enter nor swap it), the
+      # file is chowned there, and `mv -T` renames it into the home. A rename
+      # replaces a planted link or refuses a planted directory; it never follows.
+      reg="$HERMES_HOME/.agent-index-register"
+      { rm -rf "$reg" && mkdir -m 0700 "$reg" \
+        && env HOME="$reg" HERMES_HOME="$reg" AGENT_ID="$AGENT_ID" PLOW_AGENT_TOKEN="$PLOW_AGENT_TOKEN" \
+          /opt/hermes/.venv/bin/python3 /opt/plow/agent-index-client.py \
+          --register --agent "$AGENT_ID" >/dev/null \
+        && chown hermes:hermes "$reg/.agent-index.json" \
+        && mv -T "$reg/.agent-index.json" "$HERMES_HOME/.agent-index.json"; } || {
+      rm -rf "$reg"
       echo "agent-index: no index key this pass, not reporting" >&2
       /bin/sleep 300
       continue
       }
+      rm -rf "$reg"
       ;;
     *)
       echo "agent-index: the client could not read this install's state (above);" >&2

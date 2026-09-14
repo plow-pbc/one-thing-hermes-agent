@@ -17,12 +17,17 @@ with tempfile.TemporaryDirectory() as d:
 
     # Fresh home: no jobs.json means nothing is registered, so it creates one.
     assert rc.main("cht_1", jobs, fake_run) == 0
+    assert calls[-1][:3] == [rc.HERMES, "cron", "create"]
     assert calls[-1][-1] == "plow_chat:cht_1" and "0 8 * * *" in calls[-1]
 
-    # Already there: no duplicate.
-    jobs.write_text(json.dumps({"jobs": [{"name": "one-thing"}]}))
+    # Already there for this chat: no duplicate, no edit.
+    jobs.write_text(json.dumps({"jobs": [{"id": "j1", "name": "one-thing", "deliver": "plow_chat:cht_1"}]}))
     calls.clear()
     assert rc.main("cht_1", jobs, fake_run) == 0 and calls == []
+
+    # The home outlived a re-mint onto another chat: retarget the same job.
+    assert rc.main("cht_2", jobs, fake_run) == 0
+    assert calls == [[rc.HERMES, "cron", "edit", "j1", "--deliver", "plow_chat:cht_2"]]
 
     # Unreadable state must raise, never read as empty.
     jobs.write_text("{not json")
