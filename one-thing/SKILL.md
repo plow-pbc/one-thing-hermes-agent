@@ -67,4 +67,5 @@ In the owner's DM, when they reply to a daily text:
 - **"not that"** or a reason: set it to `not that: <their reason>`, reply with
   one line, and let the reason steer future picks.
 - **"why?"**: explain in two sentences how it serves the goal.
-- **"another"**: pick again under the same rules, excluding today's pick.
+- **"another"**: set today's line to `not that: asked for another`, then pick
+  again under the same rules. Record and send the new pick as in steps 4 and 5.
