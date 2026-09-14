@@ -12,10 +12,11 @@ at `/var/lib/hermes/one-thing/goal.md`. That file is the only record of it.
 
 In the owner's one-to-one DM:
 
-- **No goal yet** (the file is missing or empty): answer what they said, then
-  ask for their life/work goal in one sentence. When they give it, write it to
-  `/var/lib/hermes/one-thing/goal.md` with the file tool, word for word. Then
-  confirm in one line that their first text comes at the next 08:00.
+- **No goal yet** (the file is missing or empty): if their message states a
+  life/work goal, write it to `/var/lib/hermes/one-thing/goal.md` with the file
+  tool, word for word, and confirm in one line that their first text comes at
+  the next 08:00. Otherwise answer what they said, then ask for the goal in one
+  sentence, and save it the same way when they give it.
 - **They change the goal:** overwrite the file with the new goal and confirm
   in one line.
 - **They answer a daily text:** follow the `one-thing` skill's
